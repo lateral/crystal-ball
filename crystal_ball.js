@@ -1,27 +1,37 @@
-var base_pt = [0.0, 0.0, 1.0]; // base point of the hyperboloid
+// the current location of the points (on the hyperboloid)
+var points = [
+  [-0.5139410485506484, 1.3264616271459857, 1.7388605032252031],
+  [3.616672196267621, -0.3840845824324792, 3.771980745141395],
+  [0.517764655819748, -0.33788191884747387, 1.175688917146378],
+  [0.16125537933307643, -1.723787151044124, 1.9993612578693323]
+];
+// edges joining the points: entries are pairs of indices
+var edges = [[0, 1], [1, 2], [2, 3], [3, 0]];
+
+const BASE_PT = [0.0, 0.0, 1.0]; // base point of the hyperboloid
 
 // the maximum (hyperbolic) distance from the centre of the disc at which the dragging works
-var action_radius = 2;
+const ACTION_RADIUS = 2;
 
 // whether or not the mouse is currently down in the region where dragging is permitted
 var dragging = false;
 
-const none_selected = -1;
+const NONE_SELECTED = -1;
 // the index of the currently selected point (if any)
-var index_of_selected = none_selected;
+var index_of_selected = NONE_SELECTED;
 // where the currently selected point has been dragged to
-var location_of_selected = base_pt;
+var location_of_selected = BASE_PT;
 
 // don't bother redrawing the points if the drag travelled less hyperbolic distance than this (for numerical stability)
-var distance_threshold = 0.000001;
+const DISTANCE_THRESHOLD = 0.000001;
 
 // minimum length of a tangent vector to bother computing its exponential (for numerical stability)
-var exp_distance_threshold = 0.0000001;
+const EXP_DISTANCE_THRESHOLD = 0.0000001;
 
 // the point (on the hyperboloid) represented by where the cursor was last time
 var last_pt;
 
-var max_point_size = 7;
+const MAX_POINT_SIZE = 7;
 
 var canvas;
 var radius_in_pixels;
@@ -115,7 +125,7 @@ function apply_matrix(mat, vector) {
 function exponential(base, tangent) {
   // base is a point on the hyperboloid, tangent is in its tangent space
   var norm = minkowski_norm(tangent);
-  if (norm < exp_distance_threshold) {
+  if (norm < EXP_DISTANCE_THRESHOLD) {
     return base;
   }
   var a = Math.cosh(norm);
@@ -134,7 +144,7 @@ function logarithm(base, other) {
   var dist = hyperboloid_distance(base, other);
   var proj = sum(other, mult(mdp, base));
   var norm = minkowski_norm(proj);
-  if (norm > exp_distance_threshold) {
+  if (norm > EXP_DISTANCE_THRESHOLD) {
     proj = mult(dist / norm, proj);
   }
   return proj;
@@ -183,9 +193,9 @@ function canvas_to_disc(coords) {
 
 function point_radius(point) {
   // return the radius of the representation of the (hyperboloid) point as a circle on the canvas
-  var dist = hyperboloid_distance(base_pt, point);
+  var dist = hyperboloid_distance(BASE_PT, point);
   // shrink the point size by the distance from the centre point
-  return Math.max(max_point_size - 2 * dist, 1);
+  return Math.max(MAX_POINT_SIZE - 2 * dist, 1);
 }
 
 function draw_edge(pt0, pt1) {
@@ -225,7 +235,7 @@ function draw() {
     draw_point(canvas_pt, point_radius(point), color);  
     draw_text(index.toString(), canvas_pt, 4 * point_radius(point));
   });
-  if (index_of_selected != none_selected) {
+  if (index_of_selected != NONE_SELECTED) {
     var canvas_pt = disc_to_canvas(hyperboloid_to_disc(location_of_selected));
     var  color = COLOR_SELECTED;
     draw_edge(points[index_of_selected], location_of_selected);
@@ -315,7 +325,7 @@ $(document).ready(function() {
   $('#canvas').mousedown(function(e) {
       var coords = get_canvas_coords(e); 
     var pt = disc_to_hyperboloid(canvas_to_disc(coords));
-    if (hyperboloid_distance(base_pt, pt) > action_radius) {
+    if (hyperboloid_distance(BASE_PT, pt) > ACTION_RADIUS) {
       // ignore clicks that occur too far out since a small drag would
       // have too large an effect
       return
@@ -329,7 +339,7 @@ $(document).ready(function() {
       }
     });
     dragging = true;
-    if (index_of_selected == none_selected) {
+    if (index_of_selected == NONE_SELECTED) {
       // user is dragging the ambient
       $('#canvas').css('cursor', 'move');
     } else {
@@ -343,8 +353,8 @@ $(document).ready(function() {
     var coords = get_canvas_coords(e); 
     var disc_pt = disc_to_hyperboloid(canvas_to_disc(coords));
     if (dragging) {
-      if (index_of_selected == none_selected) {
-        if (hyperboloid_distance(base_pt, disc_pt) > action_radius) {
+      if (index_of_selected == NONE_SELECTED) {
+        if (hyperboloid_distance(BASE_PT, disc_pt) > ACTION_RADIUS) {
           dragging = false;
           $('#canvas').css('cursor', 'not-allowed');
           return;
@@ -352,7 +362,7 @@ $(document).ready(function() {
         // user is dragging the ambient
           $('#canvas').css('cursor', 'move');
           var dist = hyperboloid_distance(last_pt, disc_pt);
-          if (dist > distance_threshold) {
+          if (dist > DISTANCE_THRESHOLD) {
             // if distance is too small, then do nothing (for
             // numerical stability)
             var delta = logarithm(last_pt, disc_pt); // hyperboloid tangent representing mouse movement
@@ -393,10 +403,10 @@ $(document).ready(function() {
   });
   $('#canvas').mouseup(function(e) {
     dragging = false;
-    if (index_of_selected != none_selected) {
+    if (index_of_selected != NONE_SELECTED) {
       points[index_of_selected] = location_of_selected;
     }
-    index_of_selected = none_selected;
+    index_of_selected = NONE_SELECTED;
     $('#canvas').css('cursor', 'default');
     draw();
   });
