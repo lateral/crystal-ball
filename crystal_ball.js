@@ -331,8 +331,8 @@ $(document).ready(function() {
     draw();
   });
   $('#canvas').on('mousedown touchstart', function(e) {
-  //$('#canvas').mousedown(function(e) {
-      var coords = get_canvas_coords(e); 
+    e.preventDefault();
+    var coords = get_canvas_coords(e); 
     var pt = disc_to_hyperboloid(canvas_to_disc(coords));
     if (hyperboloid_distance(BASE_PT, pt) > ACTION_RADIUS) {
       // ignore clicks that occur too far out since a small drag would
@@ -359,6 +359,7 @@ $(document).ready(function() {
     draw();
   });
   $('#canvas').on('mousemove touchmove', function(e) {
+    e.preventDefault();
     var coords = get_canvas_coords(e); 
     var disc_pt = disc_to_hyperboloid(canvas_to_disc(coords));
     if (dragging) {
@@ -411,6 +412,7 @@ $(document).ready(function() {
     }
   });
   $('#canvas').on('mouseup touchend', function(e) {
+    e.preventDefault();
     dragging = false;
     if (index_of_selected != NONE_SELECTED) {
       points[index_of_selected] = location_of_selected;
