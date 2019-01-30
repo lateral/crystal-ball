@@ -3,6 +3,10 @@ A ``crystal ball'' for viewing graphs (or just point configurations) in  2-dimen
 All computation is performed in the hyperboloid model (for computation).
 Entirely client-side.
 
+## Hosted version
+
+A hosted version is available [here](https://crystal-ball.lateral.io/).
+
 ## Usage
 Just open `index.html`.
 
