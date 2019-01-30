@@ -1,0 +1,14 @@
+body {
+  margin: 50px;
+}
+div.input_container {
+  padding: 40px 20px 20px 0px;
+  float: left;
+}
+.button_box {
+  display: block;
+  width: 100%;
+  clear: both;
+}
+button {
+}
