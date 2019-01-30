@@ -274,9 +274,17 @@ function draw_arc(centre, radius, angle0, angle1) {
 
 function get_canvas_coords(event){
   // return the canvas coordinates where the provided event (e.g. mousedown) occurred
-    var rect = canvas.getBoundingClientRect();
-    var x = event.clientX - rect.left;
-    var y = event.clientY - rect.top;
+  var rect = canvas.getBoundingClientRect();
+  var x, y;
+  if (event.originalEvent.touches && event.originalEvent.touches.length > 0) {
+    var touch = event.originalEvent.touches[0];
+    x = touch.clientX - rect.left;
+    y = touch.clientY - rect.top;
+
+  } else {
+    x = event.clientX - rect.left;
+    y = event.clientY - rect.top;
+  }
   return [x, y];
 }
 
@@ -322,7 +330,8 @@ $(document).ready(function() {
     // FIXME should check points are on hyperboloid and edge indices make sense
     draw();
   });
-  $('#canvas').mousedown(function(e) {
+  $('#canvas').on('mousedown touchstart', function(e) {
+  //$('#canvas').mousedown(function(e) {
       var coords = get_canvas_coords(e); 
     var pt = disc_to_hyperboloid(canvas_to_disc(coords));
     if (hyperboloid_distance(BASE_PT, pt) > ACTION_RADIUS) {
@@ -349,7 +358,7 @@ $(document).ready(function() {
     last_pt = pt;
     draw();
   });
-  $('#canvas').mousemove(function(e) {
+  $('#canvas').on('mousemove touchmove', function(e) {
     var coords = get_canvas_coords(e); 
     var disc_pt = disc_to_hyperboloid(canvas_to_disc(coords));
     if (dragging) {
@@ -401,7 +410,7 @@ $(document).ready(function() {
       $('#canvas').css('cursor', 'default');
     }
   });
-  $('#canvas').mouseup(function(e) {
+  $('#canvas').on('mouseup touchend', function(e) {
     dragging = false;
     if (index_of_selected != NONE_SELECTED) {
       points[index_of_selected] = location_of_selected;
