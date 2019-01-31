@@ -25,6 +25,9 @@ const MDP_INPUT_TOLERANCE = 1e-9;
 const COLOR_UNSELECTED = "rgba(0, 0, 255, 0.75)";
 const COLOR_SELECTED = "rgba(255, 0, 0)";
 
+// Magnify the displacements when dragging a single point.
+const SINGLE_POINT_DRAG_MULTIPLIER = 4;
+
 // The current location of the points (on the hyperboloid)
 var points = [
   [-0.5139410485506484, 1.3264616271459857, 1.7388605032252031],
@@ -394,6 +397,7 @@ $(document).ready(function() {
   canvas = $('#canvas')[0];
   canvas_radius_px = canvas.width / 2;
   draw();
+
   $('#update_button').click(function(e) {
     try {
       points = parse_hyperboloid_points($('#points_input').val());
@@ -410,24 +414,25 @@ $(document).ready(function() {
     var coords = get_canvas_coords(e); 
     var pt = disc_to_hyperboloid(canvas_to_disc(coords));
     if (hyperboloid_distance(BASE_PT, pt) > ACTION_RADIUS) {
-      // ignore clicks that occur too far out since a small drag would
+      // Ignore clicks that occur too far out since a small drag would
       // have too large an effect
-      return
+      return;
     }
+    /* Iterate over the points to see if the user clicked on one */
     $.each(points, function(index, point) {
       var canvas_pt = disc_to_canvas(hyperboloid_to_disc(point));
       if (euclidean_distance(canvas_pt, coords) <= point_radius(point)) {
-        // click occurred within the point as represented on the canvas
+        // Click occurred within the point as represented on the canvas
         index_of_selected = index;
         location_of_selected = point;
       }
     });
     dragging = true;
     if (index_of_selected == NONE_SELECTED) {
-      // user is dragging the ambient
+      // User is dragging all points simultaneously.
       $('#canvas').css('cursor', 'move');
     } else {
-      // user is dragging a single point
+      // User is dragging a single point.
       $('#canvas').css('cursor', 'hand');
     }
     last_pt = pt;
@@ -443,7 +448,7 @@ $(document).ready(function() {
     var canvas_coords_at_cursor = get_canvas_coords(e); 
     var pt = disc_to_hyperboloid(canvas_to_disc(canvas_coords_at_cursor));
     if (index_of_selected == NONE_SELECTED) {
-      // User is dragging the ambient
+      // User is dragging all points simultaneously.
       if (hyperboloid_distance(BASE_PT, pt) > ACTION_RADIUS) {
         // Mouse has strayed from action radius, so cancel drag
         dragging = false;
@@ -476,6 +481,9 @@ $(document).ready(function() {
       canvas_disp[1] = -1 * canvas_disp[1];
       var disc_disp = scale(1 / canvas_radius_px, canvas_disp);
 
+      // Apply the drag multiplier (this is just UX)
+      disc_disp = scale(SINGLE_POINT_DRAG_MULTIPLIER, disc_disp);
+
       /* Scale using the Euclidean norm of the original point to become a
        * Poincaré disc tangent at that point (with the same length) (this is
        * the conformal scaling)
@@ -495,7 +503,8 @@ $(document).ready(function() {
     draw();
   });
 
-  $('#canvas').on('mouseup touchend', function(e) {
+  $('#canvas').on('mouseup touchend mouseout', function(e) {
+    console.log('FIXME');
     e.preventDefault();
     dragging = false;
     if (index_of_selected != NONE_SELECTED) {
