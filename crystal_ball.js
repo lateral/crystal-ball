@@ -504,7 +504,6 @@ $(document).ready(function() {
   });
 
   $('#canvas').on('mouseup touchend mouseout', function(e) {
-    console.log('FIXME');
     e.preventDefault();
     dragging = false;
     if (index_of_selected != NONE_SELECTED) {
