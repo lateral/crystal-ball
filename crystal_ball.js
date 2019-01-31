@@ -241,7 +241,6 @@ function draw() {
     draw_edge(points[index_of_selected], location_of_selected);
     draw_point(canvas_pt, point_radius(location_of_selected), color);  
   }
-  draw_disc_boundary();
   // also update the text boxes
   $('#points_input').val(array_to_pretty_string(points));
   $('#edges_input').val(array_to_pretty_string(edges));
@@ -286,13 +285,6 @@ function get_canvas_coords(event){
     y = event.clientY - rect.top;
   }
   return [x, y];
-}
-
-function draw_disc_boundary() {
-    var ctx = canvas.getContext("2d");
-    ctx.beginPath();
-    ctx.arc(radius_in_pixels, radius_in_pixels, radius_in_pixels, 0, Math.PI * 2);
-  ctx.stroke();
 }
 
 function draw_point(canvas_pt, point_size, color) {

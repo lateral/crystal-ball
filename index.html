@@ -1,27 +1,34 @@
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="style.css">
-<script src="jquery.min.js"></script>
-<script src="crystal_ball.js"></script>
+  <title>Crystal Ball Hyperbolic Navigator</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="jquery.min.js"></script>
+  <script src="crystal_ball.js"></script>
 </head>
 <body>
-<canvas id="canvas" width="600" height="600" style=""></canvas>
-<div>
-  <div class="input_container">
-    <h4>Points (on hyperboloid)</h4>
-    <textarea rows="10" cols="70" id="points_input">
-    </textarea>
+  <h1>"Crystal Ball" Hyperbolic Navigator</h1>
+  <canvas id="canvas" width="600" height="600" style=""></canvas>
+  <div class="container">
+    <div class="input_container points">
+      <h4>Points (on hyperboloid)</h4>
+      <textarea rows="10" cols="70" id="points_input">
+      </textarea>
+    </div>
+    <div class="input_container edges">
+      <h4>Edges (pairs of indices)</h4>
+      <textarea rows="10" cols="20" id="edges_input">
+      </textarea>
+    </div>
+    <div class="button_box">
+      <button id="update_button">Update</button>
+    </div>
   </div>
-  <div class="input_container">
-    <h4>Edges (pairs of indices)</h4>
-    <textarea rows="10" cols="20" id="edges_input">
-    </textarea>
-  </div>
-  <div class="button_box">
-    <button id="update_button">Update</button>
-  </div>
-</div>
-<a href="https://github.com/lateral/crystal-ball">
-  <img src="GitHub_Logo.png" alt="GitHub" width="80px"/></a>
+  <footer>
+    <div class="logos">
+      <a href="https://lateral.io"><img src="img/logo-icon.png" srcset="img/logo-icon.svg" class="lateral"></a>
+      <p>Lateral</p>
+      <a href="https://github.com/lateral/crystal-ball"><img src="img/github.png" class="github"></a>
+    </div>
+  </footer>
 </body>
 </html>
