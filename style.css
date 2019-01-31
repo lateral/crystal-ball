@@ -30,6 +30,11 @@ canvas {
   max-width: 800px;
 }
 
+#parsing_errors {
+  color: red;
+  font-size: 13px;
+}
+
 div.input_container {
   display: inline-block;
   padding: 40px 0 20px 0px;

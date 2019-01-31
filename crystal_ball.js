@@ -18,6 +18,9 @@ const LABEL_OFFSET_X = 5;
 const LABEL_OFFSET_Y = 0;
 const MIN_FONT_SIZE = 4;
 
+// Permitted deviation in Minkowski dot product for input points
+const MDP_INPUT_TOLERANCE = 1e-9;
+
 // Point colours.
 const COLOR_UNSELECTED = "rgba(0, 0, 255, 0.75)";
 const COLOR_SELECTED = "rgba(255, 0, 0)";
@@ -309,6 +312,7 @@ function draw_arc(centre_on_canvas, radius_on_canvas, angle0, angle1, anticlockw
 function draw() {
   var canvas = $('#canvas')[0];
   canvas.width = canvas.width;  // clear the canvas
+  $('#parsing_errors').text('');
   $.each(edges, function(index, edge) {
     draw_geodesic_segment(points[edge[0]], points[edge[1]]);
   });
@@ -391,9 +395,13 @@ $(document).ready(function() {
   canvas_radius_px = canvas.width / 2;
   draw();
   $('#update_button').click(function(e) {
-    points = JSON.parse($('#points_input').val());
-    edges = JSON.parse($('#edges_input').val());
-    // FIXME should check points are on hyperboloid and edge indices make sense
+    try {
+      points = parse_hyperboloid_points($('#points_input').val());
+      edges = parse_edges($('#edges_input').val());
+    } catch(e) {
+      $('#parsing_errors').text(e.toString());
+      return;
+    }
     draw();
   });
 
@@ -499,3 +507,63 @@ $(document).ready(function() {
     draw();
   });
 });
+
+/* Given a string `text` that is a JSON encoding of an Array of hyperboloid
+ * points (themselves Arrays), return the decoding, raising informative
+ * exceptions if this fails.
+ */
+function parse_hyperboloid_points(text) {
+  var new_points;
+  try {
+    new_points = JSON.parse(text);
+  } catch(e) {
+    throw 'Points not valid JSON';
+  }
+  if (!Array.isArray(new_points)) {
+    throw 'Points input must be an array of points (3d arrays).';
+  }
+  $.each(new_points, function(i, point) {
+    if (!Array.isArray(point) || point.length != 3) {
+      throw 'Each point should be an array of length 3.';
+    }
+    $.each(point, function(j, value) {
+      if (isNaN(value)) {
+        throw 'Point co-ordinates must be numeric!';
+      }
+    });
+    var mdp = minkowski_dot(point, point);
+    if (Math.abs(mdp + 1) > MDP_INPUT_TOLERANCE) {
+      throw 'Point ' + i + ' has Minkowski dot product ' + mdp + ' != -1.';
+    }
+  });
+  return new_points;
+}
+
+/* Given a string that is a JSON-encoding of the edge data, return the edge
+ * data, or raise an informative error message if this fails.
+ */
+function parse_edges(text) {
+  var new_edges;
+  try {
+    new_edges = JSON.parse(text);
+  } catch(e) {
+    throw 'Edges not valid JSON.';
+  }
+  if (!Array.isArray(new_edges)) {
+    throw 'Edges list should be an array.';
+  }
+  $.each(new_edges, function(i, edge) {
+    if (!Array.isArray(edge) || edge.length != 2) {
+      throw 'Each edge should be an array of length 2.';
+    }
+    $.each(edge, function(j, value) {
+      if (!Number.isInteger(value)) {
+        throw 'Edge index ' + value + ' is not an integer!';
+      }
+      if (value < 0 || value >= points.length) {
+        throw 'Edge index ' + value + ' is out of range (use 0-offset).';
+      }
+    });
+  });
+  return new_edges;
+}
