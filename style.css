@@ -37,11 +37,15 @@ div.input_container {
 
 textarea {
   font-family: monospace;
-  font-size: 13px;
+  font-size: 12px;
 }
 
-div.points{
-  padding-right: 20px;
+div.points {
+  width: 65%;
+}
+
+div.edges {
+  width: 30%;
 }
 
 h4 {
