@@ -26,4 +26,4 @@ There are no external software dependencies.  Your web browser needs to be able 
 + Numerical stability is lower when points are further away from the centre of the Poincaré disc.
 
 ## Tests
-To run the unit tests in your browser, open `run_tests.html`.
+Unit testing is performed using [QUnit](https://qunitjs.com/) and [qunit-assert-close](https://github.com/JamesMGreene/qunit-assert-close) (both bundled). To run the unit tests in your browser, open `run_tests.html`.  Opening this page runs the tests in your browser.

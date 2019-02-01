@@ -100,3 +100,82 @@ QUnit.test("disc_tangent_to_hyperboloid", function(assert) {
   var mdp = minkowski_dot(hyper_pt, hyper_tangent);
   assert.close(mdp, 0, CLOSENESS);
 });
+
+QUnit.test("parse_points vanilla case", function(assert) {
+  var pts = parse_points('[[0, 1], [1, 2]]', 2);
+  assert.equal(pts.length, 2);
+  assert.deepEqual(pts[0], [0, 1]);
+  pts = parse_points('[]', 2);
+  assert.deepEqual(pts, []);
+});
+
+QUnit.test("parse_points checks length", function(assert) {
+  var text = '[[0, 1], [1, 2]]';
+  assert.throws(function() {
+    var pts = parse_points(text, 1);
+  });
+});
+
+QUnit.test("parse_points checks numerics", function(assert) {
+  var text = '[[0, "a"], [1, 2]]';
+  assert.throws(function() {
+    var pts = parse_points(text, 2);
+  });
+});
+
+QUnit.test("parse_points expects JSON", function(assert) {
+  var text = '[[0, "a"], [1, 2]';
+  assert.throws(function() {
+    var pts = parse_points(text, 2);
+  });
+});
+
+QUnit.test("parse_points inverts array_to_pretty_string", function(assert) {
+  var pts = [PT0, PT1];
+  var text = array_to_pretty_string(pts);
+  assert.deepEqual(parse_points(text, 3), pts);
+});
+
+QUnit.test("parse_poincare_disc_points", function(assert) {
+  var pts = [[0, 0.3], [0.2, -0.1]];
+  var text = array_to_pretty_string(pts);
+  var hpts = parse_poincare_disc_points(text, 2);
+  assert_vectors_close(assert, hpts[0], disc_to_hyperboloid(pts[0]));
+});
+
+QUnit.test("parse_poincare_disc_points checks constraint", function(assert) {
+  var not_in_disc = [1, 0];
+  var text = array_to_pretty_string([not_in_disc]);
+  assert.throws(function() {
+    var pts = parse_poincare_disc_points(text, 2);
+  });
+});
+
+QUnit.test("parse_hyperboloid_points", function(assert) {
+  var pts = [PT0, PT1];
+  var text = array_to_pretty_string(pts);
+  assert.deepEqual(parse_hyperboloid_points(text, 3), pts);
+});
+
+QUnit.test("parse_hyperboloid_points checks MDP constraint", function(assert) {
+  var not_on_hyperboloid = [-0.5166377273919696, 0.34753460833346506, 1.0694775378431176];
+  var text = array_to_pretty_string([not_on_hyperboloid]);
+  assert.throws(function() {
+    var pts = parse_hyperboloid_points(text, 3);
+  });
+});
+
+QUnit.test("parse_edges", function(assert) {
+  var text = '[[0,1], [2, 0]]';
+  var edges = parse_edges(text, 2);
+  assert.deepEqual(edges[0], [0, 1]);
+});
+
+QUnit.test("parse_edges checks indices", function(assert) {
+  assert.throws(function() {
+    var edges = parse_edges('[[-1, 1]]', 3);
+  });
+  assert.throws(function() {
+    var edges = parse_edges('[[1, 4]]', 3);
+  });
+});
