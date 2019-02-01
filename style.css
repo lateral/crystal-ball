@@ -5,12 +5,6 @@ body {
   text-align: center;
 }
 
-h1 {
-  font-size: 30px;
-  padding-top: 20px;
-  padding-bottom: 30px;
-}
-
 canvas {
   -khtml-user-select: none;
   -moz-user-select: none;
@@ -28,6 +22,7 @@ canvas {
 .container {
   margin: 0 auto;
   max-width: 800px;
+  text-align: left;
 }
 
 #parsing_errors {
@@ -51,7 +46,18 @@ div.points{
 
 h4 {
   font-size: 15px;
-  text-align: left;
+  display: inline-block;
+  margin-bottom: 5px;
+  margin-right: 10px;
+}
+
+#ambient_selector_form {
+  font-size: 14px;
+}
+
+#ambient_selector_form span {
+  padding-left: 5px;
+  padding-right: 20px;
 }
 
 .button_box {

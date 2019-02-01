@@ -332,8 +332,31 @@ function draw() {
     draw_point(location_of_selected, COLOR_SELECTED);  
   }
   // also update the textareas
-  $('#points_input').val(array_to_pretty_string(points));
+  update_coordinates_view();
   $('#edges_input').val(array_to_pretty_string(edges));
+}
+
+/* Return true if the coordinates input/display textarea is set to use the
+ * hyperboloid, else false (indicating Poincaré disc).
+ */
+function coords_display_uses_hyperboloid() {
+  return $('input[name=ambient_selector]:checked').val() == 'hyperboloid';
+}
+
+/* Update the coordinates view, using hyperboloid or Poincaré disc coordinates
+ * as appropriate.
+ * */
+function update_coordinates_view() {
+  if (coords_display_uses_hyperboloid()) {
+    $('#points_input').val(array_to_pretty_string(points));
+  } else {
+    // display Poincaré disc co-ordinates instead
+    var ppts = [];
+    $.each(points, function(index, point) {
+      ppts.push(hyperboloid_to_disc(point));
+    });
+    $('#points_input').val(array_to_pretty_string(ppts));
+  }
 }
 
 /* Return a pretty string representation of the provided array.
@@ -399,8 +422,13 @@ $(document).ready(function() {
   draw();
 
   $('#update_button').click(function(e) {
+    e.preventDefault();
     try {
-      points = parse_hyperboloid_points($('#points_input').val());
+      if (coords_display_uses_hyperboloid()) {
+        points = parse_hyperboloid_points($('#points_input').val());
+      } else {
+        points = parse_poincare_disc_points($('#points_input').val());
+      }
       edges = parse_edges($('#edges_input').val());
     } catch(e) {
       $('#parsing_errors').text(e.toString());
@@ -514,13 +542,15 @@ $(document).ready(function() {
     $('#canvas').css('cursor', 'default');
     draw();
   });
+
+  $('#ambient_selector_form input').change(update_coordinates_view);
 });
 
-/* Given a string `text` that is a JSON encoding of an Array of hyperboloid
- * points (themselves Arrays), return the decoding, raising informative
- * exceptions if this fails.
+/* Given a string `text` that is a JSON encoding of an Array of points with the
+ * specified number of coordinates, (themselves Arrays), return the decoding,
+ * raising informative exceptions if this fails.
  */
-function parse_hyperboloid_points(text) {
+function parse_points(text, expected_length) {
   var new_points;
   try {
     new_points = JSON.parse(text);
@@ -528,17 +558,44 @@ function parse_hyperboloid_points(text) {
     throw 'Points not valid JSON';
   }
   if (!Array.isArray(new_points)) {
-    throw 'Points input must be an array of points (3d arrays).';
+    throw 'Points input must be an array of points.';
   }
   $.each(new_points, function(i, point) {
-    if (!Array.isArray(point) || point.length != 3) {
-      throw 'Each point should be an array of length 3.';
+    if (!Array.isArray(point) || point.length != expected_length) {
+      throw 'Point ' + i + ' has length ' + point.length + ', should be ' + expected_length + '.';
     }
     $.each(point, function(j, value) {
       if (isNaN(value)) {
         throw 'Point co-ordinates must be numeric!';
       }
     });
+  });
+  return new_points;
+}
+
+/* Given a string `text` that is a JSON encoding of an Array of points on the
+ * Poincaré disc, return the decoding, raising informative exceptions if this
+ * fails.
+ */
+function parse_poincare_disc_points(text) {
+  var new_ppoints = parse_points(text, 2);  // expect 2 coords per point
+  var new_points = []
+  $.each(new_ppoints, function(index, ppoint) {
+    if (norm(ppoint) >= 1) {
+      throw 'Point ' + index + ' is outside of the Poincaré disc!';
+    }
+    new_points.push(disc_to_hyperboloid(ppoint));
+  });
+  return new_points;
+}
+
+/* Given a string `text` that is a JSON encoding of an Array of hyperboloid
+ * points (themselves Arrays), return the decoding, raising informative
+ * exceptions if this fails.
+ */
+function parse_hyperboloid_points(text) {
+  var new_points = parse_points(text, 3);  // expect 3 coords per point
+  $.each(new_points, function(i, point) {
     var mdp = minkowski_dot(point, point);
     if (Math.abs(mdp + 1) > MDP_INPUT_TOLERANCE) {
       throw 'Point ' + i + ' has Minkowski dot product ' + mdp + ' != -1.';

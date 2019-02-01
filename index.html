@@ -6,16 +6,18 @@
   <script src="crystal_ball.js"></script>
 </head>
 <body>
-  <h1>"Crystal Ball" Hyperbolic Navigator</h1>
-  <canvas id="canvas" width="500" height="500" style=""></canvas>
+  <canvas id="canvas" width="600" height="600" style=""></canvas>
+  <form id="ambient_selector_form">
   <div class="container">
     <div class="input_container points">
-      <h4>Points (on hyperboloid)</h4>
+      <h4>Points:</h4>
+      <input type="radio" name="ambient_selector" value="hyperboloid" checked="checked"/><span>Hyperboloid</span>
+      <input type="radio" name="ambient_selector" value="poincare_disc" /><span>Poincaré disc</span>
       <textarea rows="10" cols="70" id="points_input">
       </textarea>
     </div>
     <div class="input_container edges">
-      <h4>Edges (pairs of indices)</h4>
+      <h4>Edges: (pairs of indices)</h4>
       <textarea rows="10" cols="20" id="edges_input">
       </textarea>
     </div>
@@ -24,6 +26,7 @@
       <div id="parsing_errors"></div>
     </div>
   </div>
+  </form>
   <footer>
     <div class="logos">
       <a href="https://lateral.io"><img src="img/logo-icon.png" srcset="img/logo-icon.svg" class="lateral"></a>
