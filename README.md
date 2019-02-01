@@ -1,6 +1,7 @@
-# Hyperbolic Crystal Ball (a.k.a. hyperbolic fish-eye)
+# Hyperbolic Crystal Ball
 A "crystal ball" for viewing graphs (or just point configurations) in 2-dimensional hyperbolic space, using the Poincaré disc model.  Edges are drawn as geodesic arcs.
 All computation is performed client-side, in JavaScript.
+Built by [Benjamin Wilson](https://github.com/benjaminwilson) at [Lateral GmbH](https://lateral.io/) as a tool for exploring embeddings in hyperbolic space.
 
 ## Uses
 + Learning about hyperbolic geometry and the Poincaré disc model.
