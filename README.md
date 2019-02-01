@@ -13,8 +13,8 @@ Just point your web browser to `index.html` (e.g. via `File > Open File ...`).
 
 ## Functionality
 
-+ The entire graph or point configuration can be translated or rotated by dragging the ambient.
-+ Individual points can be moved by clicking and dragging.  Movements always follow geodesic arcs (the one that is tangent to the displacement induced by the drag).  Edges are attached to the points, so they follow any changes.
++ The entire graph or point configuration can be translated or rotated by dragging the ambient. ![](img/drag-ambient.gif)
++ Individual points can be moved by clicking and dragging.  Movements always follow geodesic arcs (the one that is tangent to the displacement induced by the drag).  Edges are attached to the points, so they follow any changes. ![](img/drag-individual.gif)
 + Point and edge configurations can be loaded by simply pasting them into the textareas and hitting the "update" button.  Either hyperboloid or Poincaré disc coordinates can be used.
 
 ## Limitations
