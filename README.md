@@ -11,6 +11,9 @@ A hosted version is available [here](https://crystal-ball.lateral.io/), but it i
 ## Usage
 Just point your web browser to `index.html` (e.g. via `File > Open File ...`).
 
+## Requirements
+There are no external software dependencies.  Your web browser needs to be able to render HTML5 (all modern browsers can do this) and have JavaScript enabled (it usually is, by default).
+
 ## Functionality
 
 + The entire graph or point configuration can be translated or rotated by dragging the ambient. ![](img/drag-ambient.gif)
