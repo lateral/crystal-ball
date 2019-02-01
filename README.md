@@ -24,3 +24,6 @@ There are no external software dependencies.  Your web browser needs to be able 
 
 + As all computation is in client-side JavaScript, performance may be poor for large graphs.
 + Numerical stability is lower when points are further away from the centre of the Poincaré disc.
+
+## Tests
+To run the unit tests in your browser, open `run_tests.html`.
