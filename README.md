@@ -40,5 +40,6 @@ Please open an issue on the [GitHub repository](https://github.com/lateral/cryst
 ## Related work
 + David Madore's fantastic [hyperbolic maze](http://www.madore.org/~david/math/hyperbolic-maze.html), using a periodic tiling of a quotient of the hyperbolic plane.  Navigation through the maze via the Poincaré disc model, uses the same mathematics.
 + The very impressive [hyperbolic cellular automaton simulator](https://dmishin.github.io/hyperbolic-ca-simulator/help.html) has related functionality for exploring the Poincaré disc, though for quite a different purpose.
-+ Related software is reported to have been developed at the [University of Bielefeld](https://www.techfak.uni-bielefeld.de/~walter/h2vis/), but no implementation seems to be available.
++ [RogueViz](http://roguetemple.com/z/hyper/rogueviz.php) is a tool for visualising and navigating data using tesselations of the hyperbolic plane, built by Eryk Kopczyński and Dorota Celińska-Kopczyńska and used in [their recent work](http://arxiv.org/abs/1707.01124).  It uses the same engine as their amazing (HyperRogue)[http://roguetemple.com/z/hyper/].
 + There is a video of a very impressive [3D graph explorer](http://graphics.stanford.edu/papers/h3/) using the Poincaré ball, from Tamara Munzer (1998).  No implementation seems to be available. 
++ Related software is reported to have been developed at the [University of Bielefeld](https://www.techfak.uni-bielefeld.de/~walter/h2vis/), but no implementation seems to be available.
