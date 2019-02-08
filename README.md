@@ -23,7 +23,7 @@ Alternatively, a hosted version is available [here](https://crystal-ball.lateral
 + Point and edge configurations can be loaded by simply pasting them into the textareas and hitting the "update" button.  Either hyperboloid or Poincaré disc coordinates can be used. ![](img/load-data.gif)
 
 ### Limitations
-+ As all computation is in client-side JavaScript, performance may be poor for large graphs.
++ As all computation is in client-side JavaScript, performance may be poor for large graphs. On a 2011 laptop running Chrome 71, performance was acceptable for a graph with 1.2k nodes and as many edges. 
 + Numerical stability is lower when points are further away from the centre of the Poincaré disc.
 
 ## Development
