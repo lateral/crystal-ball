@@ -1,3 +1,5 @@
+// Version 1.0.1
+
 const BASE_PT = [0.0, 0.0, 1.0]; // base point of the hyperboloid
 
 /* Calculate the Euclidean dot product of two points.

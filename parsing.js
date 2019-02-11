@@ -1,3 +1,5 @@
+// Version 1.0.1
+
 // Permitted deviation in Minkowski dot product for input points
 const MDP_INPUT_TOLERANCE = 1e-9;
 

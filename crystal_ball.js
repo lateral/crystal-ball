@@ -1,3 +1,5 @@
+// Version 1.0.1
+
 /* The maximum (hyperbolic) distance from the centre of the disc at which the
  * dragging works.  We limit this for numerical stability.
  */

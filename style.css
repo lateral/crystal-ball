@@ -1,3 +1,5 @@
+/* Version 1.0.1 */
+
 body {
   background-color: #fafafa;
   font-family: helvetica neue;
@@ -112,11 +114,9 @@ footer .logos .lateral {
 
 footer .logos p {
   display: inline-block;
-  display: none;
   font-size: 11px;
   font-weight: 600;
   margin-right: 10px;
-  text-transform: uppercase;
   vertical-align: middle;
 }
 

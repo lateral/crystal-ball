@@ -1,3 +1,5 @@
+// Version 1.0.1
+
 const CLOSENESS = 1e-10;
 
 // example hyperboloid points
