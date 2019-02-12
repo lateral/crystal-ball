@@ -1,23 +1,23 @@
-# Hyperbolic Crystal Ball
-A "crystal ball" for viewing graphs (or just point configurations) in 2-dimensional hyperbolic space, using the Poincaré disc model.  Edges are drawn as geodesic arcs.
+# HyperNaut : a navigator for the hyperbolic plane
+A "navigator" for viewing graphs (or just point configurations) in 2-dimensional hyperbolic space, using the Poincaré disc model.  Edges are drawn as geodesic arcs.
 All computation is performed client-side, in JavaScript.
 Built by [Benjamin Wilson](https://github.com/benjaminwilson) at [Lateral GmbH](https://lateral.io/) as a tool for exploring embeddings in hyperbolic space.
 
 ## Uses
-+ Learning about hyperbolic geometry and the Poincaré disc model.
 + Inspecting 2-dimensional hyperbolic embeddings resulting from machine learning algorithms (this was the motivation of the author).
-+ Rotating and translating point configurations for better presentation (just paste your points in, transform as desired, and copy them back out again).
++ Rotating and translating point configurations for inclusions in articles and presentations (just paste your points in, transform as desired, and copy them back out again).
++ Learning about hyperbolic geometry and the Poincaré disc model.
 
 ## Requirements
 There are no external software dependencies.  Your web browser needs to be able to render HTML5 (all modern browsers can do this) and have JavaScript enabled (it usually is, by default).
 
-## Installation and usage
+## Installation
 Simply download or close the repository and open `index.html` in your web browser (e.g. via `File > Open File ...`).
 
 ### Hosted version
 Alternatively, a hosted version is available [here](https://crystal-ball.lateral.io/).
 
-## Functionality
+## Usage
 + The entire graph or point configuration can be translated or rotated by dragging the ambient. ![](img/drag-ambient.gif)
 + Individual points can be moved by clicking and dragging.  Movements always follow geodesic arcs (the one that is tangent to the displacement induced by the drag).  Edges are attached to the points, so they follow any changes. ![](img/drag-individual.gif)
 + Point and edge configurations can be loaded by simply pasting them into the textareas and hitting the "update" button.  Either hyperboloid or Poincaré disc coordinates can be used. ![](img/load-data.gif)
