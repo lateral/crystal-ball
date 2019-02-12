@@ -23,8 +23,8 @@ Alternatively, a hosted version is available [here](https://crystal-ball.lateral
 + Point and edge configurations can be loaded by simply pasting them into the textareas and hitting the "update" button.  Either hyperboloid or Poincaré disc coordinates can be used. ![](img/load-data.gif)
 
 ### Limitations
-+ As all computation is in client-side JavaScript, performance may be poor for large graphs. On a 2011 laptop running Chrome 71, performance was acceptable for a graph with 1.2k nodes and as many edges. 
-+ Numerical stability is lower when points are further away from the centre of the Poincaré disc.
++ As all computation is in client-side JavaScript, performance may be poor for large graphs. On a 2011 laptop running Chrome 71, performance was acceptable for a graph with 1k nodes and as many edges.  To test this for yourself, see `sample-data/`.
++ Numerical stability is lower when points are further away from the centre of the Poincaré disc.  This is because the area contained in a disc grows exponentially with the radius in the hyperbolic plane.  As such it is a fundamental computational limitation, not strictly speaking a limitation of the software.  This is nicely covered in [1].
 
 ## Development
 
@@ -43,3 +43,6 @@ Please open an issue on the [GitHub repository](https://github.com/lateral/cryst
 + [RogueViz](http://roguetemple.com/z/hyper/rogueviz.php) is a tool for visualising and navigating data using tesselations of the hyperbolic plane, built by Dorota Celińska-Kopczyńska and Eryk Kopczyński, and used in [their recent work](http://arxiv.org/abs/1707.01124).  It uses the same engine as their amazing [HyperRogue](http://roguetemple.com/z/hyper/).
 + There is a video of a very impressive [3D graph explorer](http://graphics.stanford.edu/papers/h3/) using the Poincaré ball, from Tamara Munzer (1998).  No implementation seems to be available. 
 + Related software is reported to have been developed at the [University of Bielefeld](https://www.techfak.uni-bielefeld.de/~walter/h2vis/), but no implementation seems to be available.
+
+## References
+[1] Sala, Frederic and De Sa, Chris and Gu, Albert and Re, Christopher, ["Representation Tradeoffs for Hyperbolic Embeddings"](http://proceedings.mlr.press/v80/sala18a.html), Proceedings of the 35th International Conference on Machine Learning, 2018.

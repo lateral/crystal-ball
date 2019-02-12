@@ -34,6 +34,7 @@ The point configuration can be manipulated either by dragging individual points 
 **Dragging an individual point**:  The point is selected by holding down the mouse button, but is not moved until the mouse button is released.  While the mouse button is held down, the position to which the point would be mapped is indicated, along with the geodesic line segment connecting the current and updated versions of the point.  The position of the mouse during drag specifies the tangent to the geodesic line along which it would move.  The new position of the point is then the exponential of (the conformal scaling of) this tangent, computed at its original position.
 
 **Dragging all points**: All points can be dragged simultaneously by dragging the background of the Poincaré disc.  The positions of all points are continuously updated while the mouse button is held down.  If `X` was the mouse position last round, and `Y` is the current mouse position, then the update is calculated as follows:
+
  + the logarithm of each point of the configuration is computed at `X`, yielding tangent vectors at `X`; 
  + these are then parallel-transported along the geodesic connecting `X` to `Y`, yielding tangent vectors at `Y`; 
  + the exponential map at `Y` is applied to these tangent vectors, mapping the points of the configuration to their updated positions.
