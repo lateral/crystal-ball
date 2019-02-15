@@ -202,3 +202,11 @@ function disc_tangent_to_hyperboloid(disc_pt, disc_tangent) {
              factor * dp];
   return scale(factor, vec);
 }
+
+/* Enforce the hyperboloid constraint by "normalising" such that the Minkowski
+ * dot product is -1.  Only necessary because working in finite precision!
+ */
+function ensure_on_hyperbolod(pt) {
+  var mdp = minkowski_dot(pt, pt);
+  return scale(1. / Math.sqrt(-mdp), pt);
+}

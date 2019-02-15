@@ -281,7 +281,7 @@ $(document).ready(function() {
         for (var i=0; i < points.length; i++) {
           var _log = logarithm(last_pt, points[i]);
           var transported_log = geodesic_parallel_transport(last_pt, delta, _log);
-          points[i] = exponential(pt, transported_log);
+          points[i] = ensure_on_hyperbolod(exponential(pt, transported_log));
         }
         last_pt = pt;
       }
@@ -315,6 +315,7 @@ $(document).ready(function() {
         // If distance is too small, then do nothing (for numerical stability).
         location_of_selected = exponential(points[index_of_selected],
                                            hyperboloid_tangent);
+        location_of_selected = ensure_on_hyperbolod(location_of_selected);
       }
     }
     draw();
