@@ -1,4 +1,6 @@
 # HyperNaut : a navigator for the hyperbolic plane
+[![DOI](http://joss.theoj.org/papers/10.21105/joss.01240/status.svg)](https://doi.org/10.21105/joss.01240)
+
 A "navigator" for viewing graphs (or just point configurations) in 2-dimensional hyperbolic space, using the Poincaré disc model.  Edges are drawn as geodesic arcs.
 All computation is performed client-side, in JavaScript.
 Built by [Benjamin Wilson](https://github.com/benjaminwilson) at [Lateral GmbH](https://lateral.io/) as a tool for exploring embeddings in hyperbolic space.
@@ -43,6 +45,15 @@ Please open an issue on the [GitHub repository](https://github.com/lateral/cryst
 + [RogueViz](http://roguetemple.com/z/hyper/rogueviz.php) is a tool for visualising and navigating data using tesselations of the hyperbolic plane, built by Dorota Celińska-Kopczyńska and Eryk Kopczyński, and used in [their recent work](http://arxiv.org/abs/1707.01124).  It uses the same engine as their amazing [HyperRogue](http://roguetemple.com/z/hyper/).
 + There is a video of a very impressive [3D graph explorer](http://graphics.stanford.edu/papers/h3/) using the Poincaré ball, from Tamara Munzer (1998).  No implementation seems to be available. 
 + Related software is reported to have been developed at the [University of Bielefeld](https://www.techfak.uni-bielefeld.de/~walter/h2vis/), but no implementation seems to be available.
+
+## Citing HyperNaut
+[![DOI](http://joss.theoj.org/papers/10.21105/joss.01240/status.svg)](https://doi.org/10.21105/joss.01240)
+
+If you use HyperNaut in a publication, please consider citing as
+```
+Wilson, (2019). HyperNaut: a navigator for the hyperbolic plane. Journal of Open Source Software, 4(34), 1240, https://doi.org/10.21105/joss.01240
+```
+(here it is in [BibTex](hypernaut.bib)).
 
 ## References
 [1] Sala, Frederic and De Sa, Chris and Gu, Albert and Re, Christopher, ["Representation Tradeoffs for Hyperbolic Embeddings"](http://proceedings.mlr.press/v80/sala18a.html), Proceedings of the 35th International Conference on Machine Learning, 2018.
