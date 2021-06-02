@@ -14,7 +14,7 @@ Built by [Benjamin Wilson](https://github.com/benjaminwilson) at [Lateral GmbH](
 There are no external software dependencies.  Your web browser needs to be able to render HTML5 (all modern browsers can do this) and have JavaScript enabled (it usually is, by default).
 
 ## Installation
-Simply download or close the repository and open `index.html` in your web browser (e.g. via `File > Open File ...`).
+Simply download or clone the repository and open `index.html` in your web browser (e.g. via `File > Open File ...`).
 
 ### Hosted version
 Alternatively, a hosted version is available [here](https://crystal-ball.lateral.io/).
